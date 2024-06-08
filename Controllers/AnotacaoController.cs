@@ -3,6 +3,7 @@ using anot_ai.Models;
 using anot_ai.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace anot_ai.Controllers
 {
@@ -18,15 +19,21 @@ namespace anot_ai.Controllers
         }
 
         [HttpPost]
-        public IActionResult criarNovo(NovaAnotacao nova)
+        public IActionResult Criar(NovaAnotacao nova)
         {
-            _anotacaoRepository.criarNovaAnotacao(nova);
+            _anotacaoRepository.CriarNovaAnotacao(nova);
             return Created();
         }
         [HttpGet]
-        public ActionResult<List<Anotacao>> listar()
+        public ActionResult<List<Anotacao>> Listar()
         {
-            return Ok(_anotacaoRepository.listarAnotacoes());
+            return Ok(_anotacaoRepository.ListarAnotacoes());
+        }
+        [HttpPut("/{id}")]
+        public ActionResult Atualizar(int id, [FromBody] AtualizacaoAnotacao atualizacao)
+        {
+            
+            return NoContent();
         }
 
     }

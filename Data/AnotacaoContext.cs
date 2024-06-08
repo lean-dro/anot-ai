@@ -6,7 +6,7 @@ namespace anot_ai.Data
     public class AnotacaoContext : DbContext
     {
         public DbSet<Anotacao> Anotacoes { get; set; }
-        public string DbPath { get; }
+        public string DbPath { get; set; }
 
         public AnotacaoContext()
         {
