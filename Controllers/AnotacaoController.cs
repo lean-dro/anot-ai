@@ -32,9 +32,18 @@ namespace anot_ai.Controllers
         [HttpPut("/{id}")]
         public ActionResult Atualizar(int id, [FromBody] AtualizacaoAnotacao atualizacao)
         {
-            
+            if (_anotacaoRepository.BuscarAnotacaoPorId(id) == null) return NotFound();
+            _anotacaoRepository.AtualizarAnotacao(id, atualizacao);
             return NoContent();
         }
+
+        [HttpDelete]
+        public ActionResult<List<Anotacao>> DeletarTodas()
+        {
+            _anotacaoRepository.Limpar();
+            return Ok();
+        }
+
 
     }
 }

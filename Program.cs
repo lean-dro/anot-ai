@@ -1,4 +1,5 @@
 using anot_ai.Data;
+using anot_ai.Repository;
 using anot_ai.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AnotacaoContext>();
 builder.Services.AddScoped<IAnotacaoRepository, AnotacaoRepository>();
+builder.Services.AddScoped<ISmartRepository, SmartRepository>();
+builder.Services.AddSqlite<AnotacaoContext>("Data Source=anotacoes.db");
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

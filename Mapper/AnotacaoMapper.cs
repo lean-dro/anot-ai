@@ -11,9 +11,21 @@ namespace anot_ai.Mapper
             {
                 DataCriacao = new DateTime(),
                 DataPrazo = nova.DataPrazo,
-                Descricao = nova.Descricao
-
+                Descricao = nova.Descricao,
+                Smart = new Smart() { 
+                    Achievable = "",
+                    Measurable = "",
+                    Specific = "",
+                    Relevant = "",
+                    Time = "",
+                },
+                PlanoAcao = new PlanoAcao(),
+                Monitoramento = new Monitoramento() { Check = ""}
             };
+        }
+        public static void AtualizarAnotacao(ref Anotacao anotacao, AtualizacaoAnotacao atualizacao)
+        {
+         
         }
     }
 }

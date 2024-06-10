@@ -1,6 +1,0 @@
-@anot_ai_HostAddress = http://localhost:5264
-
-GET {{anot_ai_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
