@@ -4,8 +4,9 @@ using System.Text.Json.Serialization;
 namespace anot_ai.Data.DTO
 {
     public class GeminiRequest
+
     {
-        [JsonPropertyName("contents")]
+            
         public Content contents { get; set; }
         public GeminiRequest(string prompt)
         { 

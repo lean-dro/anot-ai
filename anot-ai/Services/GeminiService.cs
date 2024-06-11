@@ -1,6 +1,10 @@
 ﻿using anot_ai.Data.DTO;
+using Newtonsoft.Json.Linq;
+using NuGet.Protocol;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace anot_ai.Services
 {
@@ -17,6 +21,7 @@ namespace anot_ai.Services
                 var options = new JsonSerializerOptions()
                 {
                     IncludeFields = true,
+                    PropertyNameCaseInsensitive = true
                 };
 
                 DotNetEnv.Env.Load();
@@ -40,8 +45,21 @@ namespace anot_ai.Services
 
                 string corpoResultado = await resultado.Content.ReadAsStringAsync();
 
-                var smartCompleto = JsonSerializer.Deserialize<SmartCompleto>(corpoResultado, options);
+             
+                JObject jsonObject = JObject.Parse(corpoResultado);
+                var smartJson = jsonObject.SelectToken("$.candidates[0].content.parts[0].text").ToString();
 
+                JsonNode jsonDocument = JsonNode.Parse(smartJson);
+                
+
+                SmartCompleto smartCompleto = new SmartCompleto();
+                var smart = jsonDocument["smart"].Deserialize<SmartDTO>(options);
+                var planoAcao = jsonDocument["planoAcao"].Deserialize<PlanoAcaoDTO>(options);
+                var monitoramento = jsonDocument["monitoramento"].Deserialize<MonitoramentoDTO>(options);
+
+                smartCompleto.Smart = smart;
+                smartCompleto.Monitoramento = monitoramento;
+                smartCompleto.PlanoAcao = planoAcao;
 
 
                 return smartCompleto;

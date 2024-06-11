@@ -1,7 +1,10 @@
-﻿namespace anot_ai.Data.DTO
+﻿using System.Text.Json.Serialization;
+
+namespace anot_ai.Data.DTO
 {
     public class SmartDTO
     {
+        
         public string Specific { get; set; }
         public string Measurable { get; set; }
         public string Achievable { get; set; }

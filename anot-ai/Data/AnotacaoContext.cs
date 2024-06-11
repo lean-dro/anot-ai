@@ -26,22 +26,22 @@ namespace anot_ai.Data
             modelBuilder.Entity<Smart>()
                 .HasOne(smart => smart.Anotacao)
                 .WithOne(anotacao => anotacao.Smart)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Monitoramento>()
                 .HasOne(monitoramento => monitoramento.Anotacao)
                 .WithOne(anotacao => anotacao.Monitoramento)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<PlanoAcao>()
                .HasOne(planoAcao => planoAcao.Anotacao)
                .WithOne(anotacao => anotacao.PlanoAcao)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Etapa>()
                .HasOne(etapa => etapa.PlanoAcao)
                .WithMany(planoAcao => planoAcao.Etapas)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Cascade);
 
         }
     }

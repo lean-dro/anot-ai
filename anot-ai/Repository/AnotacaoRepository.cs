@@ -20,7 +20,7 @@ namespace anot_ai.Services
 
         public bool CriarNovaAnotacao(NovaAnotacao novaAnotacao)
         {
-            Anotacao anotacao = AnotacaoMapper.NovaAnotacaoParaAnotacao(novaAnotacao);
+            Anotacao anotacao = AnotacaoMapper.NovaAnotacaoParaEntidade(novaAnotacao);
             _context.Anotacoes.Add(anotacao);
             return _context.SaveChanges() > 0;
         }
