@@ -3,10 +3,6 @@ using anot_ai.Data.DTO;
 using anot_ai.Mapper;
 using anot_ai.Models;
 using anot_ai.Repository;
-using Microsoft.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Web.Http;
 
 namespace anot_ai.Services
 {
@@ -45,7 +41,7 @@ namespace anot_ai.Services
              var anotacao = BuscarAnotacaoPorId(id);
           
 
-             AnotacaoMapper.AtualizarAnotacao(anotacao, atualizacaoAnotacao);
+             AnotacaoMapper.AtualizarAnotacao(ref anotacao, atualizacaoAnotacao);
 
              _context.SaveChanges();
            
