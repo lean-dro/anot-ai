@@ -9,10 +9,10 @@ namespace anot_ai.Services
         bool CriarNovaAnotacao(NovaAnotacao anotacao);
         List<Anotacao> ListarAnotacoes();
 
-        void DeletarAnotacao(int id);
+        void DeletarAnotacao(Anotacao anotacao);
 
-        void AtualizarAnotacao(int id, AtualizacaoAnotacao atualizacaoAnotacao);
-
+        void AtualizarAnotacao(int id, AtualizacaoAnotacaoSimples atualizacaoAnotacao);
+        void AtualizarAnotacaoComIA(int id, AtualizacaoAnotacaoSimples atualizacaoAnotacao);
         void Limpar();
 
         public Anotacao? BuscarAnotacaoPorId(int id);

@@ -15,7 +15,7 @@ namespace anot_ai.Mapper
 
             return new Anotacao()
             {
-                DataCriacao = new DateTime(),
+                DataCriacao = DateTime.Now,
                 DataPrazo = nova.DataPrazo,
                 Descricao = nova.Descricao,
                 Smart = SmartMapper.ParaEntidade(smart.Smart),
@@ -24,7 +24,30 @@ namespace anot_ai.Mapper
             };
         }
 
-        
+        public static AnotacaoDTO ParaDTO(Anotacao anotacao)
+        {
+            return new AnotacaoDTO()
+            {
+                Id = anotacao.Id,
+                Descricao = anotacao.Descricao,
+                DataCriacao = anotacao.DataCriacao,
+                DataPrazo = anotacao.DataPrazo,
+                Monitoramento = MonitoramentoMapper.ParaDTO(anotacao.Monitoramento),
+                Smart = SmartMapper.ParaDTO(anotacao.Smart),
+                PlanoAcao = PlanoAcaoMapper.ParaDTO(anotacao.PlanoAcao)
+            };
+        }
+
+        public static List<AnotacaoDTO> ParaDTO(List<Anotacao> anotacoes)
+        {
+            List<AnotacaoDTO> anotacoesDTO = new List<AnotacaoDTO>();
+            foreach (var anotacao in anotacoes)
+            {
+                anotacoesDTO.Add(ParaDTO(anotacao));
+            }
+            return anotacoesDTO;
+        }
+
 
         public static void AtualizarAnotacao(ref Anotacao anotacao, AtualizacaoAnotacao atualizacao)
         {

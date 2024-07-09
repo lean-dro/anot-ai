@@ -66,7 +66,7 @@ namespace anot_ai.Services
             }
             catch (Exception e)
             {
-                return null;
+                throw new Exception();
             }
         }
 

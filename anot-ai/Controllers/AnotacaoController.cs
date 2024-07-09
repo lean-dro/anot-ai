@@ -1,4 +1,5 @@
 ﻿using anot_ai.Data.DTO;
+using anot_ai.Mapper;
 using anot_ai.Models;
 using anot_ai.Services;
 using Microsoft.AspNetCore.Http;
@@ -7,8 +8,8 @@ using System.Net;
 
 namespace anot_ai.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class AnotacaoController : ControllerBase
     {
         private IAnotacaoRepository _anotacaoRepository;
@@ -18,30 +19,71 @@ namespace anot_ai.Controllers
             _anotacaoRepository = anotacaoRepository;
         }
 
+        [HttpGet]
+        public ActionResult<List<AnotacaoDTO>> Listar()
+        {
+            return Ok(AnotacaoMapper.ParaDTO(_anotacaoRepository.ListarAnotacoes()));
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<AnotacaoDTO> Listar(int id)
+        {
+            var busca = _anotacaoRepository.BuscarAnotacaoPorId(id);
+            if (busca == null) return NotFound();
+            return Ok(AnotacaoMapper.ParaDTO(busca));
+        }
+
+
         [HttpPost]
         public IActionResult Criar(NovaAnotacao nova)
         {
             _anotacaoRepository.CriarNovaAnotacao(nova);
             return Created();
         }
-        [HttpGet]
-        public ActionResult<List<Anotacao>> Listar()
+        [HttpPost("Lote")]
+        public IActionResult CriarLote(List<NovaAnotacao> novas)
         {
-            return Ok(_anotacaoRepository.ListarAnotacoes());
+            for (int i = 0; i < novas.Count; i++)
+            {
+                _anotacaoRepository.CriarNovaAnotacao(novas[i]);
+            }
+            
+            return Created();
         }
-        [HttpPut("/{id}")]
-        public ActionResult Atualizar(int id, [FromBody] AtualizacaoAnotacao atualizacao)
+
+
+
+        [HttpPut("{id}")]
+        public ActionResult AtualizarSmart(int id, [FromBody] AtualizacaoAnotacaoSimples atualizacaoAnotacaoSimples)
         {
             if (_anotacaoRepository.BuscarAnotacaoPorId(id) == null) return NotFound();
-            _anotacaoRepository.AtualizarAnotacao(id, atualizacao);
+            _anotacaoRepository.AtualizarAnotacao(id, atualizacaoAnotacaoSimples);
             return NoContent();
         }
 
-        [HttpDelete]
-        public ActionResult<List<Anotacao>> DeletarTodas()
+
+        [HttpPut("IA/{id}")]
+        public ActionResult AtualizarSmartComIA(int id, [FromBody] AtualizacaoAnotacaoSimples atualizacaoAnotacaoSimples)
         {
-            _anotacaoRepository.Limpar();
-            return Ok();
+            if (_anotacaoRepository.BuscarAnotacaoPorId(id) == null) return NotFound();
+            _anotacaoRepository.AtualizarAnotacaoComIA(id, atualizacaoAnotacaoSimples);
+            return NoContent();
+        }
+
+
+
+
+        [HttpDelete("{id}")]
+        public ActionResult DeletarTodas(int id)
+        {
+
+            var busca = _anotacaoRepository.BuscarAnotacaoPorId(id);
+            if (busca == null)
+            {
+                return NotFound();
+            }
+            _anotacaoRepository.DeletarAnotacao(busca);
+            return NoContent();
         }
 
 

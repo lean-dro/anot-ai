@@ -1,5 +1,6 @@
 ﻿using anot_ai.Data.DTO;
 using anot_ai.Models;
+using Humanizer;
 
 namespace anot_ai.Mapper
 {
@@ -15,6 +16,18 @@ namespace anot_ai.Mapper
                 Achievable = dto.Achievable,
                 Relevant = dto.Relevant,
                 Time = dto.Time
+            };
+        }
+
+        public static SmartDTO ParaDTO(Smart smart)
+        {
+            return new SmartDTO()
+            {
+                Specific = smart.Specific,
+                Measurable = smart.Measurable,
+                Achievable = smart.Achievable,
+                Relevant = smart.Relevant,
+                Time = smart.Time
             };
         }
 

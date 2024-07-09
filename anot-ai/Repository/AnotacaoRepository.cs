@@ -27,26 +27,56 @@ namespace anot_ai.Services
 
         public List<Anotacao> ListarAnotacoes()
         {
-            Console.WriteLine(_context.DbPath);
-            return _context.Anotacoes.ToList();
+            var anotacoes = _context.Anotacoes.ToList();
+            var smarts = _context.Smarts.ToList();
+            var etapas = _context.Etapas.ToList();
+            var planos = _context.PlanosAcao.ToList();
+            var monitoramentos = _context.Monitoramentos.ToList();
+
+            var listaRelacionada =
+                from a in anotacoes
+                join s in smarts on a.Id equals s.AnotacaoId
+                join m in monitoramentos on a.Id equals m.AnotacaoId
+                select a;
+
+            var lista = listaRelacionada.ToList();
+
+            return lista;
         }
 
-        public void DeletarAnotacao(int id)
+        public void DeletarAnotacao(Anotacao anotacao)
         {
-            throw new NotImplementedException();
+            _context.Remove(anotacao);
+            _context.SaveChanges();
         }
 
-        public void AtualizarAnotacao(int id, AtualizacaoAnotacao atualizacaoAnotacao)
+        public void AtualizarAnotacao(int id, AtualizacaoAnotacaoSimples atualizacaoAnotacao)
         {
              var anotacao = BuscarAnotacaoPorId(id);
-          
 
-             AnotacaoMapper.AtualizarAnotacao(ref anotacao, atualizacaoAnotacao);
+
+            anotacao.DataPrazo = atualizacaoAnotacao.DataPrazo;
+            anotacao.Descricao = atualizacaoAnotacao.Descricao;
 
              _context.SaveChanges();
-           
         }
+        public void AtualizarAnotacaoComIA(int id, AtualizacaoAnotacaoSimples atualizacaoAnotacao)
+        {
+            var anotacao = BuscarAnotacaoPorId(id);
+            _context.Remove(anotacao.Smart);
+            _context.Remove(anotacao.PlanoAcao);
+            _context.Remove(anotacao.Monitoramento);
 
+            anotacao.DataPrazo = atualizacaoAnotacao.DataPrazo;
+            anotacao.Descricao = atualizacaoAnotacao.Descricao;
+
+            SmartCompleto smart = new GeminiService().ObterSmart(anotacao.Descricao, anotacao.DataPrazo).Result;
+            anotacao.Smart = SmartMapper.ParaEntidade(smart.Smart);
+            anotacao.PlanoAcao = PlanoAcaoMapper.ParaEntidade(smart.PlanoAcao);
+            anotacao.Monitoramento = MonitoramentoMapper.ParaEntidade(smart.Monitoramento);
+           
+            _context.SaveChanges();
+        }
 
         public void Limpar()
         {
@@ -57,8 +87,10 @@ namespace anot_ai.Services
 
         public Anotacao? BuscarAnotacaoPorId(int id)
         {
-            var busca = _context.Anotacoes.ToList().Find(anotacao => anotacao.Id == id);
+            var busca = ListarAnotacoes().Find(a=>a.Id==id);
+            
             return busca;
         }
+   
     }
 }

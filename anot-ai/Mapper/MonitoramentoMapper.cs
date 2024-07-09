@@ -15,5 +15,13 @@ namespace anot_ai.Mapper
             };
 
         }
+        public static MonitoramentoDTO ParaDTO(Monitoramento monitoramento)
+        {
+            return new MonitoramentoDTO()
+            {
+                Check = monitoramento.Check
+            };
+        }
+
     }
 }

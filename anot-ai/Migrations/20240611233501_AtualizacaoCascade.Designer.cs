@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using anot_ai.Data;
 
@@ -10,9 +11,11 @@ using anot_ai.Data;
 namespace anot_ai.Migrations
 {
     [DbContext(typeof(AnotacaoContext))]
-    partial class AnotacoesContextModelSnapshot : ModelSnapshot
+    [Migration("20240611233501_AtualizacaoCascade")]
+    partial class AtualizacaoCascade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
