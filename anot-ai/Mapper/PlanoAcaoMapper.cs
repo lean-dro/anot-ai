@@ -31,6 +31,7 @@ namespace anot_ai.Mapper
             {
                 plano.Etapas.Add(new EtapaDTO()
                 {
+                    Id = planoAcao.Etapas[i].Id,
                     NumeroEtapa = planoAcao.Etapas[i].NumeroEtapa,
                     Acao = planoAcao.Etapas[i].Acao,
                     Detalhes = planoAcao.Etapas[i].Detalhes,

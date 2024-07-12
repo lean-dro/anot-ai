@@ -8,14 +8,13 @@ namespace anot_ai.Services
 {
     public class AnotacaoRepository : IAnotacaoRepository
     {
-        private ISmartRepository _smartRepository { get; set; }
+      
 
         private AnotacaoContext _context { get; set; }
 
-        public AnotacaoRepository(AnotacaoContext dbContext, ISmartRepository smartRepository)
+        public AnotacaoRepository(AnotacaoContext dbContext)
         {
             _context = dbContext;
-            _smartRepository = smartRepository;
         }
 
         public bool CriarNovaAnotacao(NovaAnotacao novaAnotacao)

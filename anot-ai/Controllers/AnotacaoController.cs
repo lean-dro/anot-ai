@@ -26,7 +26,7 @@ namespace anot_ai.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AnotacaoDTO> Listar(int id)
+        public ActionResult<AnotacaoDTO> Buscar(int id)
         {
             var busca = _anotacaoRepository.BuscarAnotacaoPorId(id);
             if (busca == null) return NotFound();

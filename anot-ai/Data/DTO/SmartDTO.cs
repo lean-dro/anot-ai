@@ -4,6 +4,7 @@ namespace anot_ai.Data.DTO
 {
     public class SmartDTO
     {
+        public int Id { get; set; }
         
         public string Specific { get; set; }
         public string Measurable { get; set; }

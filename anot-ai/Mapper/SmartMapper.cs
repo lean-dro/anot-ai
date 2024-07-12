@@ -1,6 +1,5 @@
 ﻿using anot_ai.Data.DTO;
 using anot_ai.Models;
-using Humanizer;
 
 namespace anot_ai.Mapper
 {
@@ -23,6 +22,7 @@ namespace anot_ai.Mapper
         {
             return new SmartDTO()
             {
+                Id = smart.Id,
                 Specific = smart.Specific,
                 Measurable = smart.Measurable,
                 Achievable = smart.Achievable,
