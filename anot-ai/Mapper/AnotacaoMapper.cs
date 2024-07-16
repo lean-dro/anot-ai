@@ -26,6 +26,10 @@ namespace anot_ai.Mapper
 
         public static AnotacaoDTO ParaDTO(Anotacao anotacao)
         {
+            if (anotacao == null)
+            {
+                return null;
+            }
             return new AnotacaoDTO()
             {
                 Id = anotacao.Id,

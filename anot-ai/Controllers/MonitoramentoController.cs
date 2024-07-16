@@ -33,7 +33,7 @@ namespace anot_ai.Controllers
         [HttpPost("Anotacao/{id}")]
         public IActionResult Criar(int id, [FromBody] MonitoramentoSimples novo)
         {
-            var anotacao = _anotacaoRepository.BuscarAnotacaoPorId(id);
+            var anotacao = _anotacaoRepository.BuscarAnotacaoPeloId(id);
             if (anotacao == null)
             {
                 return NotFound("Anotação não encontrada");

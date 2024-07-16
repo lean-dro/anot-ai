@@ -1,5 +1,6 @@
 ﻿using anot_ai.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace anot_ai.Data
 {
@@ -23,24 +24,32 @@ namespace anot_ai.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
+
+
+
             modelBuilder.Entity<Smart>()
                 .HasOne(smart => smart.Anotacao)
                 .WithOne(anotacao => anotacao.Smart)
+                .HasForeignKey<Smart>(s=>s.AnotacaoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Monitoramento>()
                 .HasOne(monitoramento => monitoramento.Anotacao)
                 .WithOne(anotacao => anotacao.Monitoramento)
+                .HasForeignKey<Monitoramento>(m => m.AnotacaoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<PlanoAcao>()
                .HasOne(planoAcao => planoAcao.Anotacao)
                .WithOne(anotacao => anotacao.PlanoAcao)
+               .HasForeignKey<PlanoAcao>(pa => pa.AnotacaoId)
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Etapa>()
                .HasOne(etapa => etapa.PlanoAcao)
                .WithMany(planoAcao => planoAcao.Etapas)
+               .HasForeignKey(etapa=> etapa.PlanoAcaoId)
                .OnDelete(DeleteBehavior.Cascade);
 
         }

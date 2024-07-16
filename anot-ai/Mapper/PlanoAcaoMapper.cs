@@ -25,6 +25,10 @@ namespace anot_ai.Mapper
 
         public static PlanoAcaoDTO ParaDTO(PlanoAcao planoAcao)
         {
+            if (planoAcao == null)
+            {
+                return null;
+            }
             PlanoAcaoDTO plano = new PlanoAcaoDTO();
 
             for (int i = 0; i < planoAcao.Etapas.Count; i++)

@@ -5,10 +5,9 @@ namespace anot_ai.Repository
 {
     public interface ISmartRepository
     {
-        bool CriarNovoSmart(Smart smart);
-        Smart? BuscarSmartPorID(int id);
-        List<Smart> ListarSmarts();
-        void AtualizarSmart(int id, SmartDTO atualizacaoSmart);
-
+        void Criar(Anotacao anotacao,SmartSimples smart);
+        Smart? BuscarSmartPeloId(int id);
+        void Atualizar(int id, SmartSimples atualizacao);
+        void Excluir(Smart smart);
     }
 }

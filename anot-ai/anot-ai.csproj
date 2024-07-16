@@ -7,23 +7,16 @@
     <RootNamespace>anot_ai</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="WeatherForecast.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Remove="anot-ai.http" />
   </ItemGroup>
-	<ItemGroup>
-
-		<None Include=".env" CopyToOutputDirectory="PreserveNewest" />
-
-	</ItemGroup>
-	<ItemGroup>
-
-		<None Include="prompt_base.txt" CopyToOutputDirectory="PreserveNewest" />
-
-	</ItemGroup>
+<ItemGroup>
+	<None Include=".env" CopyToOutputDirectory="PreserveNewest" />
+</ItemGroup>
+<ItemGroup>
+	<None Include="prompt_base.txt" CopyToOutputDirectory="PreserveNewest" />
+</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DotNetEnv" Version="3.0.0" />

@@ -28,7 +28,7 @@ namespace anot_ai.Controllers
         [HttpGet("{id}")]
         public ActionResult<AnotacaoDTO> Buscar(int id)
         {
-            var busca = _anotacaoRepository.BuscarAnotacaoPorId(id);
+            var busca = _anotacaoRepository.BuscarAnotacaoPeloId(id);
             if (busca == null) return NotFound();
             return Ok(AnotacaoMapper.ParaDTO(busca));
         }
@@ -37,7 +37,7 @@ namespace anot_ai.Controllers
         [HttpPost]
         public IActionResult Criar(NovaAnotacao nova)
         {
-            _anotacaoRepository.CriarNovaAnotacao(nova);
+            _anotacaoRepository.Criar(nova);
             return Created();
         }
         [HttpPost("Lote")]
@@ -45,7 +45,7 @@ namespace anot_ai.Controllers
         {
             for (int i = 0; i < novas.Count; i++)
             {
-                _anotacaoRepository.CriarNovaAnotacao(novas[i]);
+                _anotacaoRepository.Criar(novas[i]);
             }
             
             return Created();
@@ -56,8 +56,8 @@ namespace anot_ai.Controllers
         [HttpPut("{id}")]
         public ActionResult AtualizarSmart(int id, [FromBody] AtualizacaoAnotacaoSimples atualizacaoAnotacaoSimples)
         {
-            if (_anotacaoRepository.BuscarAnotacaoPorId(id) == null) return NotFound();
-            _anotacaoRepository.AtualizarAnotacao(id, atualizacaoAnotacaoSimples);
+            if (_anotacaoRepository.BuscarAnotacaoPeloId(id) == null) return NotFound();
+            _anotacaoRepository.Atualizar(id, atualizacaoAnotacaoSimples);
             return NoContent();
         }
 
@@ -65,8 +65,8 @@ namespace anot_ai.Controllers
         [HttpPut("IA/{id}")]
         public ActionResult AtualizarSmartComIA(int id, [FromBody] AtualizacaoAnotacaoSimples atualizacaoAnotacaoSimples)
         {
-            if (_anotacaoRepository.BuscarAnotacaoPorId(id) == null) return NotFound();
-            _anotacaoRepository.AtualizarAnotacaoComIA(id, atualizacaoAnotacaoSimples);
+            if (_anotacaoRepository.BuscarAnotacaoPeloId(id) == null) return NotFound();
+            _anotacaoRepository.AtualizarComIA(id, atualizacaoAnotacaoSimples);
             return NoContent();
         }
 
@@ -77,12 +77,12 @@ namespace anot_ai.Controllers
         public ActionResult DeletarTodas(int id)
         {
 
-            var busca = _anotacaoRepository.BuscarAnotacaoPorId(id);
+            var busca = _anotacaoRepository.BuscarAnotacaoPeloId(id);
             if (busca == null)
             {
                 return NotFound();
             }
-            _anotacaoRepository.DeletarAnotacao(busca);
+            _anotacaoRepository.Excluir(busca);
             return NoContent();
         }
 

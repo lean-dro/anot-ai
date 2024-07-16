@@ -26,6 +26,10 @@ namespace anot_ai.Mapper
         }
         public static MonitoramentoDTO ParaDTO(Monitoramento monitoramento)
         {
+            if (monitoramento == null)
+            {
+                return null;
+            }
             return new MonitoramentoDTO()
             {
                 Id = monitoramento.Id,

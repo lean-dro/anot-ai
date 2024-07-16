@@ -3,6 +3,7 @@ using anot_ai.Data.DTO;
 using anot_ai.Mapper;
 using anot_ai.Models;
 using anot_ai.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace anot_ai.Services
 {
@@ -17,7 +18,7 @@ namespace anot_ai.Services
             _context = dbContext;
         }
 
-        public bool CriarNovaAnotacao(NovaAnotacao novaAnotacao)
+        public bool Criar(NovaAnotacao novaAnotacao)
         {
             Anotacao anotacao = AnotacaoMapper.NovaAnotacaoParaEntidade(novaAnotacao);
             _context.Anotacoes.Add(anotacao);
@@ -26,32 +27,27 @@ namespace anot_ai.Services
 
         public List<Anotacao> ListarAnotacoes()
         {
-            var anotacoes = _context.Anotacoes.ToList();
+
+            var anotacoes = _context.Anotacoes.ToList() ;
             var smarts = _context.Smarts.ToList();
             var etapas = _context.Etapas.ToList();
             var planos = _context.PlanosAcao.ToList();
             var monitoramentos = _context.Monitoramentos.ToList();
 
-            var listaRelacionada =
-                from a in anotacoes
-                join s in smarts on a.Id equals s.AnotacaoId
-                join m in monitoramentos on a.Id equals m.AnotacaoId
-                select a;
+           
 
-            var lista = listaRelacionada.ToList();
-
-            return lista;
+            return anotacoes;
         }
 
-        public void DeletarAnotacao(Anotacao anotacao)
+        public void Excluir(Anotacao anotacao)
         {
             _context.Remove(anotacao);
             _context.SaveChanges();
         }
 
-        public void AtualizarAnotacao(int id, AtualizacaoAnotacaoSimples atualizacaoAnotacao)
+        public void Atualizar(int id, AtualizacaoAnotacaoSimples atualizacaoAnotacao)
         {
-             var anotacao = BuscarAnotacaoPorId(id);
+             var anotacao = BuscarAnotacaoPeloId(id);
 
 
             anotacao.DataPrazo = atualizacaoAnotacao.DataPrazo;
@@ -59,9 +55,9 @@ namespace anot_ai.Services
 
              _context.SaveChanges();
         }
-        public void AtualizarAnotacaoComIA(int id, AtualizacaoAnotacaoSimples atualizacaoAnotacao)
+        public void AtualizarComIA(int id, AtualizacaoAnotacaoSimples atualizacaoAnotacao)
         {
-            var anotacao = BuscarAnotacaoPorId(id);
+            var anotacao = BuscarAnotacaoPeloId(id);
             _context.Remove(anotacao.Smart);
             _context.Remove(anotacao.PlanoAcao);
             _context.Remove(anotacao.Monitoramento);
@@ -84,7 +80,7 @@ namespace anot_ai.Services
         }
        
 
-        public Anotacao? BuscarAnotacaoPorId(int id)
+        public Anotacao? BuscarAnotacaoPeloId(int id)
         {
             var busca = ListarAnotacoes().Find(a=>a.Id==id);
             
